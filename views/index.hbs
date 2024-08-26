@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">{{title}}</h1>
+
+        <form action="/search" method="get">
+            <input type="search" name="q" placeholder="Search contacts...">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <form action="/add" method="post" class="mb-4">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Contact Name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" name="phone" class="form-control" placeholder="Contact Phone" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Contact</button>
+        </form>
+
+        <h2>Saved Contacts</h2>
+        <ul class="list-group mb-4">
+            {{#each contacts}}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{name}}</strong> - {{phone}}
+                </div>
+                <div>
+                    <form action="/call/{{id}}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-success">Call</button>
+                    </form>
+                    <form action="/delete/{{id}}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+
+        <h2>Recent Call Logs</h2>
+
+        <ul class="list-group">
+            {{#each callLogs}}
+            <li class="list-group-item">
+                <strong>{{name}}</strong> - {{phone}} <span class="text-muted">({{date}})</span>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</body>
+</html>
